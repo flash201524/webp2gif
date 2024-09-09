@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+import sys
 
 
 def convert(file, output=""):
@@ -18,8 +19,11 @@ def convert(file, output=""):
 
 
 def convert_all_webp_in_directory():
-    # 获取当前脚本所在的目录
-    current_directory = os.path.dirname(os.path.realpath(__file__))
+    # 获取当前脚本/可执行文件所在的目录
+    if getattr(sys, 'frozen', False):  # 如果是通过 PyInstaller 打包的
+        current_directory = os.path.dirname(sys.executable)
+    else:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
 
     # 获取目录下所有文件
     all_files = os.listdir(current_directory)
